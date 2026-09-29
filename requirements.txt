@@ -1,0 +1,13 @@
+pandas>=2.1
+numpy
+scikit-learn>=1.3
+sqlalchemy>=2.0
+psycopg2-binary
+streamlit>=1.35
+plotly
+schedule
+anthropic
+openai
+# optional, better embeddings: sentence-transformers
+fastapi
+uvicorn

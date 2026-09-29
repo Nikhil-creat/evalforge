@@ -1,0 +1,15 @@
+x-app: &app
+  build: .
+  env_file: [.env]
+  environment: {DATABASE_URL: "postgresql+psycopg2://evalforge:evalforge@db:5432/evalforge"}
+  depends_on: [db]
+  restart: on-failure
+services:
+  db:
+    image: postgres:16
+    environment: {POSTGRES_USER: evalforge, POSTGRES_PASSWORD: evalforge, POSTGRES_DB: evalforge}
+    volumes: [pgdata:/var/lib/postgresql/data]
+  app: {<<: *app, ports: ["8501:8501"]}
+  api: {<<: *app, command: uvicorn api:app --host 0.0.0.0 --port 8000, ports: ["8000:8000"]}
+  worker: {<<: *app, command: python -m evalforge.scheduler}
+volumes: {pgdata: {}}
