@@ -4,7 +4,7 @@ from .llm import ask
 import re
 
 def _f1(a, b):
-    A, B = set(re.findall(r"\w+", a.lower())), set(re.findall(r"\w+", b.lower()))
+    A, B = set(re.findall(r"\w+", (a if isinstance(a, str) else "").lower())), set(re.findall(r"\w+", (b if isinstance(b, str) else "").lower()))
     if not A or not B: return 0.0
     p, r = len(A & B) / len(A), len(A & B) / len(B)
     return 0.0 if p + r == 0 else 2 * p * r / (p + r)
